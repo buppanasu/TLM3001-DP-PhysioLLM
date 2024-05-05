@@ -1,9 +1,7 @@
-from qdrant_client import QdrantClient
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import qdrant
 from langchain_community.document_loaders.directory import DirectoryLoader
 from langchain_community.document_loaders.pdf import PyPDFLoader
-
 from vector_embedding import get_vector_embeddings
 
 
@@ -18,9 +16,10 @@ def main():
     print(f"Loaded {len(documents)} documents")
 
     # Split the documents into chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
     chunks = text_splitter.split_documents(documents)
-    print(chunks[0])
+    for chunk in chunks:
+        print("Splitted chunk", chunk.metadata)
 
     # Embed the chunks
     embeddings = get_vector_embeddings("NeuML/pubmedbert-base-embeddings")

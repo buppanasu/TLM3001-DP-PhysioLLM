@@ -2,7 +2,6 @@ import argparse
 from datetime import datetime
 import os
 import ollama
-from ollama import Message
 from qdrant_client import QdrantClient
 from vector_embedding import get_vector_embeddings
 from langchain.prompts import ChatPromptTemplate
@@ -99,11 +98,11 @@ def main():
     # Generate initial prompt to start the conversation
     initial_prompt = generate_initial_prompt(db)
     messages = [
-        Message(
+        ollama.Message(
             role="system",
             content=SYSTEM_PROMPT,
         ),
-        Message(
+        ollama.Message(
             role="user",
             content=initial_prompt,
         ),
