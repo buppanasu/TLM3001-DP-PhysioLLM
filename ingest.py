@@ -28,7 +28,7 @@ def main():
         chunks,
         embeddings,
         url=vector_db_url,
-        collection_name="test-collection",
+        collection_name="physio-textbooks",
         prefer_grpc=True,
     )
 
