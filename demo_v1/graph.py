@@ -6,7 +6,7 @@ from typing_extensions import TypedDict
 from zmq import has
 from agents.query_translator import query_translator, QueryTranslatorOutput
 from agents.retrieval_grader import retrieval_grader, RetrievalGraderOutput
-from agents.diagnosis_generator import diagnosis_generator
+from agents.diagnosis_generator import diagnosis_generator, DiagnosisGeneratorOutput
 from agents.halluncination_grader import hallucination_grader, HallucinationGraderOutput
 from db import db
 import asyncio
@@ -71,7 +71,9 @@ async def retrieve(graph_state: GraphState) -> GraphState:
         results = db.similarity_search_with_score(subquery, k=3)
 
         for doc, score in results:
-            query_result["documents"].append(doc.page_content)
+            query_result["documents"].append(
+                f"source:{doc.metadata['source']}\n{doc.page_content}"
+            )
 
         documents.append(query_result)
 
@@ -93,7 +95,8 @@ async def grade_documents(graph_state: GraphState) -> GraphState:
 
     async def grade_query_document_pair(query, document, query_index, document_index):
         llm_result = await retrieval_grader.ainvoke(
-            {"document": document, "question": query}
+            {"document": document, "question": query},
+            {"run_name": f"retrieval-grader-{query_index}-{document_index}"},
         )
         parsed_llm_result = RetrievalGraderOutput(**llm_result)
 
@@ -147,7 +150,9 @@ async def web_search(graph_state: GraphState) -> GraphState:
     documents = graph_state["documents"]
 
     async def query_web_search(query, query_index):
-        web_results = await web_search_tool.ainvoke(query)
+        web_results = await web_search_tool.ainvoke(
+            query, {"run_name": f"web-search-{query_index}"}
+        )
         return {"query_index": query_index, "documents": web_results}
 
     # Web search for each query that did not have relevant documents
@@ -168,7 +173,9 @@ async def web_search(graph_state: GraphState) -> GraphState:
         query_index = result["query_index"]
         docs = result["documents"]
 
-        documents[query_index]["documents"] = [doc["content"] for doc in docs]
+        documents[query_index]["documents"] = [
+            f'source:{doc["url"]}\n{doc["content"]}' for doc in docs
+        ]
 
     return {**graph_state, "documents": documents}
 
@@ -191,8 +198,37 @@ async def generate(graph_state: GraphState) -> GraphState:
 
     # RAG generation
     generation_result = diagnosis_generator.invoke(
-        {"context": formatted_context, "question": question}
+        {"context": formatted_context, "question": question},
+        {"run_name": "diagnosis-generator"},
     )
+    parsed_generation_result = DiagnosisGeneratorOutput(**generation_result)
+
+    generation_result = (
+        "## Differential diagnoses based on assessments of the patient:\n\n"
+    )
+
+    # Add summary
+    generation_result += f"### Summary\n{parsed_generation_result.summary}\n"
+
+    # Add differential diagnoses
+    for index, diagnosis in enumerate(
+        parsed_generation_result.differential_diagnoses, start=1
+    ):
+        generation_result += f"### Diagnosis {index}: {diagnosis.diagnosis}\n"
+        generation_result += f"**Rationale:** {diagnosis.rational}\n\n"
+
+        if diagnosis.ieee_intext_citations:
+            generation_result += "##### In-text citations\n"
+            generation_result += ", ".join(
+                [citation for citation in diagnosis.ieee_intext_citations]
+            )
+        generation_result += "\n"
+
+    # Add references
+    if parsed_generation_result.ieee_references:
+        generation_result += "### References\n"
+        for citation in parsed_generation_result.ieee_references:
+            generation_result += f"- {citation}\n"
 
     return {
         **graph_state,
@@ -209,6 +245,16 @@ def check_hallucinations(graph_state: GraphState) -> GraphState:
     generation = graph_state["generation"]
     documents = graph_state["documents"]
     hallucination_count_balance = graph_state["halluncination_check_balance"]
+
+    formatted_documents = []
+    for item in documents:
+        docs = item["documents"]
+        query_str = item["question"]
+        docs_str = "\n\n---\n\n".join(docs)
+        text = f"Subquery:\n{query_str}\n\nDocuments:\n{docs_str}"
+        formatted_documents.append(text)
+
+    formatted_context = "\n\n***\n\n".join(formatted_documents)
 
     # Run hallucination grader on the generated differential diagnosis
     hallucination_result = hallucination_grader.invoke(
@@ -285,6 +331,8 @@ async def test_nodes():
     ) as file:
         main_query = file.read()
 
+    print("Running test nodes")
+
     graph_state = GraphState(
         {
             "main_query": main_query,
@@ -325,8 +373,8 @@ async def test_nodes():
     graph_state = await generate(graph_state)
     pprint(graph_state["generation"])
 
-    # Check the generated differential diagnosis for hallucinations
-    graph_state = check_hallucinations(graph_state)
+    # # Check the generated differential diagnosis for hallucinations
+    # graph_state = check_hallucinations(graph_state)
 
 
 def construct_graph() -> StateGraph:
@@ -398,8 +446,9 @@ async def run_graph(graph: StateGraph):
 
 
 async def main():
-    graph = construct_graph()
-    await run_graph(graph)
+    await test_nodes()
+    # graph = construct_graph()
+    # await run_graph(graph)
 
 
 if __name__ == "__main__":
