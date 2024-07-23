@@ -44,7 +44,7 @@ Here is the user question: {question}<|eot_id|>
 <|start_header_id|>assistant<|end_header_id|>
 """
 
-llm = ChatOpenAI(model=Llm.GPT_3DOT5, temperature=0)
+llm = ChatOpenAI(model=Llm.GPT_4O_MINI, temperature=0)
 # llm = ChatGroq(model=LLAMA3_80B, temperature=1)
 # llm = ChatOllama(model=LOCAL_LLM, format="json", temperature=0)
 

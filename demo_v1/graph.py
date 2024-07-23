@@ -8,6 +8,7 @@ from agents.query_translator import query_translator, QueryTranslatorOutput
 from agents.retrieval_grader import retrieval_grader, RetrievalGraderOutput
 from agents.diagnosis_generator import diagnosis_generator, DiagnosisGeneratorOutput
 from agents.halluncination_grader import hallucination_grader, HallucinationGraderOutput
+from agents.context_translator import context_translator, ContextTranslatorOutput
 from db import db
 import asyncio
 
@@ -72,7 +73,7 @@ async def retrieve(graph_state: GraphState) -> GraphState:
 
         for doc, score in results:
             query_result["documents"].append(
-                f"source:{doc.metadata['source']}\n{doc.page_content}"
+                f"source:{doc.metadata['source']}\ncontent:{doc.page_content}"
             )
 
         documents.append(query_result)
@@ -180,6 +181,50 @@ async def web_search(graph_state: GraphState) -> GraphState:
     return {**graph_state, "documents": documents}
 
 
+### Node - translate the retrieved documents into a format suitable for the generation model
+async def translate_documents(graph_state: GraphState) -> GraphState:
+    """Translate the retrieved documents into a format suitable for the generation model"""
+
+    print(
+        "--- TRANSLATING RETRIEVED DOCUMENTS INTO A SUITABLE FORMAT FOR GENERATION ---"
+    )
+
+    documents = graph_state["documents"]
+
+    async def translate_query_documents(query_index, query_item):
+        question = query_item["question"]
+        documents = query_item["documents"]
+
+        llm_result = await context_translator.ainvoke(
+            {
+                "query": question,
+                "documents": "\n\n---\n\n".join(documents),
+            }
+        )
+        parsed_llm_result = ContextTranslatorOutput(**llm_result)
+        formatted_documents = [
+            f"source:{item.source}\ncontent:{item.content}"
+            for item in parsed_llm_result.context_documents
+        ]
+
+        return {
+            "query_index": query_index,
+            "documents": formatted_documents,
+        }
+
+    invocations = []
+    for i, item in enumerate(documents):
+        invocations.append(translate_query_documents(i, item))
+    translated_documents = await asyncio.gather(*invocations)
+
+    for result in translated_documents:
+        query_index = result["query_index"]
+        docs = result["documents"]
+        documents[query_index]["documents"] = docs
+
+    return {**graph_state, "documents": documents}
+
+
 ### Node - Generate differential diagnosis based on the retrieved documents
 async def generate(graph_state: GraphState) -> GraphState:
     print("---GENERATE---")
@@ -283,10 +328,10 @@ def check_hallucinations(graph_state: GraphState) -> GraphState:
 
 
 ### Conditional edge - Determines whether to go to web search or generation based on the web_search flag
-def decide_to_generate_or_websearch(
+def decide_to_do_additional_search(
     graph_state: GraphState,
-) -> Literal["generate", "websearch"]:
-    """Decides whether to generate differential diagnosis or conduct web search"""
+) -> Literal["translate_documents", "websearch"]:
+    """Decides whether to translate documents or conduct web search"""
 
     print("---ASSESS GRADED DOCUMENTS---")
     web_search = graph_state["web_search"]
@@ -297,8 +342,8 @@ def decide_to_generate_or_websearch(
         )
         return "websearch"
     else:
-        print("---DECISION: GENERATE DIFFERENTIAL DIAGNOSIS---")
-        return "generate"
+        print("---DECISION: TRANSLATE ALL RETRIEVED DOCUMENTS---")
+        return "translate_documents"
 
 
 ### Conditional edge - Determines whether to go end the process or check for hallucinations based on the hallucination_check_balance
@@ -369,9 +414,13 @@ async def test_nodes():
     else:
         print("All subqueries have relevant documents.")
 
+    # Translate the retrieved documents into a format suitable for the generation model
+    graph_state = await translate_documents(graph_state)
+    pprint(graph_state["documents"])
+
     # Generate differential diagnosis based on the retrieved documents
-    graph_state = await generate(graph_state)
-    pprint(graph_state["generation"])
+    # graph_state = await generate(graph_state)
+    # pprint(graph_state["generation"])
 
     # # Check the generated differential diagnosis for hallucinations
     # graph_state = check_hallucinations(graph_state)
@@ -385,9 +434,10 @@ def construct_graph() -> StateGraph:
     # Define the nodes
     workflow.add_node("translate_query", translate_query)  # translate query
     workflow.add_node("retrieve", retrieve)  # retrieve
-    workflow.add_node("websearch", web_search)  # web search
-    workflow.add_node("generate", generate)  # generate
     workflow.add_node("grade_documents", grade_documents)  # grade documents
+    workflow.add_node("websearch", web_search)  # web search
+    workflow.add_node("translate_documents", translate_documents)  # translate documents
+    workflow.add_node("generate", generate)  # generate
     workflow.add_node(
         "check_hallucinations", check_hallucinations
     )  # check hallucinations
@@ -396,15 +446,20 @@ def construct_graph() -> StateGraph:
     workflow.set_entry_point("translate_query")  # entry point
     workflow.add_edge("translate_query", "retrieve")  # translate query -> retrieve
     workflow.add_edge("retrieve", "grade_documents")  # retrieve -> grade documents
-    workflow.add_conditional_edges(  # grade documents -> decide to generate or websearch
+    workflow.add_conditional_edges(  # grade documents -> decide to translate documents or websearch
         "grade_documents",
-        decide_to_generate_or_websearch,
+        decide_to_do_additional_search,
         {
-            "generate": "generate",
+            "translate_documents": "translate_documents",
             "websearch": "websearch",
         },
     )
-    workflow.add_edge("websearch", "generate")  # web search -> grade documents
+    workflow.add_edge(
+        "websearch", "translate_documents"
+    )  # web search -> grade documents
+    workflow.add_edge(
+        "translate_documents", "generate"
+    )  # translate documents -> generate
     workflow.add_edge(
         "generate", "check_hallucinations"
     )  # generate -> check hallucinations
@@ -446,9 +501,9 @@ async def run_graph(graph: StateGraph):
 
 
 async def main():
-    await test_nodes()
-    # graph = construct_graph()
-    # await run_graph(graph)
+    # await test_nodes()
+    graph = construct_graph()
+    await run_graph(graph)
 
 
 if __name__ == "__main__":

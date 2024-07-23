@@ -1,6 +1,7 @@
 class Llm:
     LLAMA3_70B = "llama3-70b-8192"
     GPT_4O = "gpt-4o"
+    GPT_4O_MINI = "gpt-4o-mini"
     GPT_3DOT5 = "gpt-3.5-turbo"
 
 

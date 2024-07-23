@@ -84,7 +84,7 @@ On physical examination, Mr. Smith appears uncomfortable but is able to walk int
 """
 
 # llm = ChatGroq(model=Llm.LLAMA3_70B, temperature=1, stop_sequences=["<|eot_id|>"])
-llm = ChatOpenAI(model=Llm.GPT_4O, temperature=0.5)
+llm = ChatOpenAI(model=Llm.GPT_4O_MINI, temperature=0.5)
 
 prompt = PromptTemplate(
     template=QUERY_TRANSLATOR_PROMPT,

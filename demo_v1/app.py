@@ -1,6 +1,6 @@
 import asyncio
 import streamlit as st
-from graph import GraphState, construct_graph, web_search
+from graph import GraphState, construct_graph
 
 st.title("🩺💪🩻 PhysioTriage")
 
@@ -80,6 +80,12 @@ async def run_graph(query: str):
             "Web search complete, found relevant information for all subqueries",
             icon="🌐",
         )
+        st.info(f"{step_count}. Translating retrieved documents...", icon="⚙️")
+        return step_count
+
+    def translate_documents_output(graph_state: GraphState, step_count: int):
+        step_count += 1
+        st.info("Translated retrieved documents", icon="📚")
         st.info(
             f"{step_count}. Generating potential differential diagnoses...", icon="🧬"
         )
@@ -114,6 +120,7 @@ async def run_graph(query: str):
         "retrieve": retrieve_info_output,
         "grade_documents": grade_documents_output,
         "websearch": web_search_output,
+        "translate_documents": translate_documents_output,
         "generate": generation_output,
         "check_hallucinations": check_hallucinations_output,
     }
