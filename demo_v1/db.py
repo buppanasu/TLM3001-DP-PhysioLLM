@@ -9,11 +9,11 @@ def get_vector_embeddings(embedding_model: str):
     return embeddings
 
 
-print("Loading vector embeddings and creating Qdrant client...")
-embeddings = get_vector_embeddings(VectorDb.EMBEDDING_MODEL)
-client = QdrantClient(VectorDb.VECTOR_DB_URL)
-db = Qdrant(
-    client=client,
-    embeddings=embeddings,
-    collection_name="physio-textbooks",
-)
+def get_qdrant_client():
+    embeddings = get_vector_embeddings(VectorDb.EMBEDDING_MODEL)
+    client = QdrantClient(VectorDb.VECTOR_DB_URL)
+    return Qdrant(
+        client=client,
+        embeddings=embeddings,
+        collection_name="physio-textbooks",
+    )

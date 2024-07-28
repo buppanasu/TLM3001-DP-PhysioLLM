@@ -8,7 +8,7 @@ from langchain_openai import ChatOpenAI
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from langchain_core.output_parsers.json import JsonOutputParser
-from langchain.prompts import PromptTemplate
+from langchain.prompts import PromptTemplate, ChatPromptTemplate
 from langchain.output_parsers import PydanticOutputParser
 from langchain_groq import ChatGroq
 from typing import List
@@ -26,19 +26,25 @@ class QueryTranslatorOutput(BaseModel):
 
 
 parser = PydanticOutputParser(pydantic_object=QueryTranslatorOutput)
+format_instructions = parser.get_format_instructions()
 
-QUERY_TRANSLATOR_PROMPT = """<|begin_of_text|><|start_header_id|>system<|end_header_id|>You are a Query Translator Agent for a retrieval-augmented generation system,
+QUERY_TRANSLATOR_SYSTEM_PROMPT = """# Query Translator Agent
+
+You are a Query Translator Agent for a retrieval-augmented generation system,
 your job is to translate a complex query into numerous concise and targetted queries
 This sub-queries will be used to conduct a similarity search retrieval on a vector database containing medical information related to physiotherapy and musculoskeletal conditions.
 
 ## Objective:
+
 Convert subjective and objective patient assessments into multiple, specific, and focused queries. 
 These queries will be used for retrieval-augmented generation from a vector database to aid physiotherapists in identifying potential differential diagnoses.
 
 ## Audience: 
+
 Physiotherapists requiring precise queries derived from patient assessments to facilitate differential diagnosis using retrieval-augmented generation.
 
 ## Instructions:
+
 1. Synthesize Patient Assessments into Queries
 - Combine key elements from both subjective and objective assessments into a comprehensive set of queries. Each query should be focused, addressing specific aspects of the patient's symptoms, findings, or history.
 2. Extract Key Elements:
@@ -75,24 +81,27 @@ On physical examination, Mr. Smith appears uncomfortable but is able to walk int
 ...
 
 ## Output instructions:
-{format_instructions}<|eot_id|>
 
-<|start_header_id|>user<|end_header_id|>
-{main_query}<|eot_id|>
+{format_instructions}
 
-<|start_header_id|>assistant<|end_header_id|>
+Remember to provide a list of subqueries that are specific, focused, and address different aspects of the patient's symptoms, findings, or history. These subqueries will be used for retrieval-augmented generation to aid in differential diagnosis.
+"""
+
+QUERY_TRANSLATOR_USER_PROMPT = """
+## Query to translate:
+{main_query}
+
+## Task:
+
+Translate the provided query into a set of specific and focused subqueries that address different aspects of the patient's symptoms, findings, or history. These subqueries will be used for retrieval-augmented generation to aid in differential diagnosis.
 """
 
 # llm = ChatGroq(model=Llm.LLAMA3_70B, temperature=1, stop_sequences=["<|eot_id|>"])
 llm = ChatOpenAI(model=Llm.GPT_4O_MINI, temperature=0.5)
 
-prompt = PromptTemplate(
-    template=QUERY_TRANSLATOR_PROMPT,
-    input_variables=["question"],
-    partial_variables={
-        "format_instructions": parser.get_format_instructions(),
-    },
-)
+prompt = ChatPromptTemplate.from_messages(
+    [("system", QUERY_TRANSLATOR_SYSTEM_PROMPT), ("user", QUERY_TRANSLATOR_USER_PROMPT)]
+).partial(format_instructions=format_instructions)
 
 query_translator = (
     prompt | llm | JsonOutputParser(pydantic_object=QueryTranslatorOutput)

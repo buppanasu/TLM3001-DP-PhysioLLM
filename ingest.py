@@ -10,7 +10,7 @@ def main():
 
     print("Ingesting documents...")
     loader = DirectoryLoader(
-        "documents", glob="*.pdf", show_progress=True, loader_cls=PyPDFLoader
+        "documents", glob="*.pdf", show_progress=True, loader_cls=PyPDFLoader  # type: ignore
     )
     documents = loader.load()
     print(f"Loaded {len(documents)} documents")

@@ -1,0 +1,51 @@
+## Differential diagnoses based on assessments of the patient:
+
+### Summary
+The differential diagnoses for the patient's lower back pain include Lumbar Radiculopathy, Myofascial Pain Syndrome, and Psychogenic Pain. Lumbar Radiculopathy is the most likely diagnosis given the patient's symptoms and physical examination findings. Myofascial Pain Syndrome is also a consideration due to the nature of the pain and history of muscle overuse. Psychogenic Pain is less likely but worth considering given the normal imaging results and the context of symptom hyperfocus.
+### Diagnosis 1: Lumbar Radiculopathy
+**Rationale:** The patient's presentation of lower back pain radiating down the left leg, worsened by prolonged sitting or standing, and relieved by lying down, combined with a positive straight leg raise test, suggests a potential diagnosis of Lumbar Radiculopathy. The quoted context describes symptoms such as inability to move the left ankle, muscle spasms, and pain exacerbated by certain conditions, which are consistent with nerve root irritation or compression. The absence of motor weakness or sensory deficits further supports this diagnosis, as these symptoms can vary in severity.
+
+##### In-text citations
+\[1\]: documents/Spearing,Pelletier&Drnach_Tecklin’s Pediatric 6th Ed.pdf
+
+    - She is unable to touch her left foot to the ground, and while it is held in an inverted and... because of her pain she cannot do chores, socialize, walk long distances, participate in sports, and play the piano because of not being able to push the pedals or get comfortable. In addition, she has headaches, muscle spasms, and an inability to move her left ankle.
+
+
+\[2\]: documents/Spearing,Pelletier&Drnach_Tecklin’s Pediatric 6th Ed.pdf
+
+    - Her pain is made worse by touching, weather, stress, cold, and being still.
+
+
+
+### Diagnosis 2: Myofascial Pain Syndrome
+**Rationale:** The patient's dull, achy pain in the lumbar region with occasional radiation down the left leg, worsened by prolonged sitting or standing, and relieved by lying down, is also indicative of Myofascial Pain Syndrome. The context describes pain exacerbated by touching and certain conditions, which aligns with trigger points in myofascial tissues. The patient's history of low back pain after heavy lifting or inactivity supports the likelihood of muscle overuse or strain contributing to this condition.
+
+##### In-text citations
+\[2\]: documents/Spearing,Pelletier&Drnach_Tecklin’s Pediatric 6th Ed.pdf
+
+    - Her pain is made worse by touching, weather, stress, cold, and being still. Her pain is made better by medication (meloxicam), heat, and moving.
+
+
+\[1\]: documents/Spearing,Pelletier&Drnach_Tecklin’s Pediatric 6th Ed.pdf
+
+    - Jenny rated her pain as 4/10 at rest and a highest pain level of 9/10. She describes her pain as constant, pressurizing, and throbbing.
+
+
+
+### Diagnosis 3: Psychogenic Pain
+**Rationale:** Considering the normal imaging results and the patient's significant pain and functional disability, a diagnosis of Psychogenic Pain or Somatic Symptom Disorder could be considered. The context mentions conversion-like symptoms and hyperfocus on physical complaints, which are characteristic of psychogenic origins of pain. However, this diagnosis is less likely given the clear physical findings of tenderness and positive straight leg raise test.
+
+##### In-text citations
+\[1\]: documents/Spearing,Pelletier&Drnach_Tecklin’s Pediatric 6th Ed.pdf
+
+    - Her examination is normal, suggesting these are conversion-like symptoms, and additionally she is hyperfocused on her symptoms and physical complaints.
+
+
+\[2\]: documents/Spearing,Pelletier&Drnach_Tecklin’s Pediatric 6th Ed.pdf
+
+    - Imaging: All normal (radiograph of lumbar spine, left ankle; MRI of lumbar spine, left ankle, brain; MR angiogram of neck)
+
+
+
+### References
+- Spearing, L., Pelletier, H., & Drnach, M. (Eds.). (2020). Tecklin’s Pediatric Physical Therapy (6th ed.). Elsevier.

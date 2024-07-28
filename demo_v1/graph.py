@@ -1,15 +1,14 @@
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langgraph.graph import StateGraph, END
 from pprint import pprint
-from typing import List, Literal
+from typing import List, Literal, Optional
 from typing_extensions import TypedDict
-from zmq import has
 from agents.query_translator import query_translator, QueryTranslatorOutput
 from agents.retrieval_grader import retrieval_grader, RetrievalGraderOutput
 from agents.diagnosis_generator import diagnosis_generator, DiagnosisGeneratorOutput
 from agents.halluncination_grader import hallucination_grader, HallucinationGraderOutput
 from agents.context_translator import context_translator, ContextTranslatorOutput
-from db import db
+from db import get_qdrant_client
 import asyncio
 
 ### Langgraph State
@@ -32,6 +31,7 @@ class GraphState(TypedDict):
     web_search: str
     documents: List[dict]
     has_hallucinations: bool
+    hallucination_grader_output: Optional[HallucinationGraderOutput]
     halluncination_check_balance: int
 
 
@@ -64,6 +64,7 @@ async def retrieve(graph_state: GraphState) -> GraphState:
 
     # Get the subqueries
     subqueries = graph_state["subqueries"]
+    db = get_qdrant_client()
 
     # Retrieve documents from a vector database using the subqueries
     documents = []
@@ -262,11 +263,14 @@ async def generate(graph_state: GraphState) -> GraphState:
         generation_result += f"### Diagnosis {index}: {diagnosis.diagnosis}\n"
         generation_result += f"**Rationale:** {diagnosis.rational}\n\n"
 
-        if diagnosis.ieee_intext_citations:
-            generation_result += "##### In-text citations\n"
-            generation_result += ", ".join(
-                [citation for citation in diagnosis.ieee_intext_citations]
+        generation_result += "##### In-text citations\n"
+        for quote in diagnosis.relevant_quotes:
+            generation_result += (
+                f"\\[{quote.ieee_intext_citation}\\]: {quote.source}\n\n"
             )
+            generation_result += f"    - {quote.text}\n"
+            generation_result += "\n\n"
+
         generation_result += "\n"
 
     # Add references
@@ -303,23 +307,25 @@ def check_hallucinations(graph_state: GraphState) -> GraphState:
 
     # Run hallucination grader on the generated differential diagnosis
     hallucination_result = hallucination_grader.invoke(
-        {"facts": documents, "answer": generation}, {"run_name": "hallucination-grader"}
+        {"facts": formatted_context, "answer": generation},
+        {"run_name": "hallucination-grader"},
     )
     parsed_hallucination_result = HallucinationGraderOutput(**hallucination_result)
 
-    if parsed_hallucination_result.score == "yes":
+    if parsed_hallucination_result.overall_assessment.grounded_score > 0.7:
         has_hallucinations = False
         print("No hallucinations detected in the generated differential diagnosis")
     else:
         has_hallucinations = True
         print(
             "Hallucinations detected in the generated differential diagnosis",
-            parsed_hallucination_result.reason,
         )
+        pprint(parsed_hallucination_result)
 
     return {
         **graph_state,
         "has_hallucinations": has_hallucinations,
+        "hallucination_grader_output": parsed_hallucination_result,
         "halluncination_check_balance": hallucination_count_balance - 1,
     }
 
@@ -387,6 +393,7 @@ async def test_nodes():
             "generation": "",
             "has_hallucinations": False,
             "halluncination_check_balance": 3,
+            "hallucination_grader_output": None,
         }
     )
 
@@ -475,7 +482,7 @@ def construct_graph() -> StateGraph:
     return workflow
 
 
-async def run_graph(graph: StateGraph):
+async def run_graph(graph: StateGraph) -> str:
     graph = construct_graph()
     app = graph.compile()
 
@@ -492,12 +499,14 @@ async def run_graph(graph: StateGraph):
         generation="",
         halluncination_check_balance=3,
         has_hallucinations=False,
+        hallucination_grader_output=None,
     )
 
     async for output in app.astream(inputs):
         for key, value in output.items():
             pprint(f"Finished running: {key}")
-    pprint(value["generation"])
+
+    return value["generation"]
 
 
 async def main():

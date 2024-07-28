@@ -1,5 +1,6 @@
 import asyncio
 import streamlit as st
+from agents.halluncination_grader import HallucinationGraderOutput
 from graph import GraphState, construct_graph
 
 st.title("🩺💪🩻 PhysioTriage")
@@ -26,9 +27,41 @@ async def run_graph(query: str):
         generation="",
         halluncination_check_balance=3,
         has_hallucinations=False,
+        hallucination_grader_output=None,
     )
 
     step_count = 0
+
+    def format_to_markdown(data: HallucinationGraderOutput):
+        md = []
+        oa = data.overall_assessment
+
+        md.append("# Hallucination Grader Report\n")
+
+        # Overall Assessment
+        md.append("## Overall Assessment\n")
+        md.append(f"**Grounded Score**: {oa.grounded_score}\n")
+        md.append(f"**Confidence**: {oa.confidence}\n")
+        md.append(f"**Summary**: {oa.summary}\n")
+
+        # Verified Claims
+        md.append("\n## Verified Claims\n")
+        for i, claim in enumerate(data.verified_claims, start=1):
+            md.append(f"#### Claim\n")
+            md.append(f"**Claim**: {claim.claim}\n")
+            md.append(f"**Is Grounded**: {'Yes' if claim.is_grounded else 'No'}\n")
+            md.append(f"**Supporting Evidence**: {claim.supporting_evidence}\n")
+            md.append(f"**Explanation**: {claim.explanation}\n")
+
+        # Identified Hallucinations
+        md.append("\n## Identified Hallucinations\n")
+        if data.identified_hallucinations:
+            for hallucination in data.identified_hallucinations:
+                md.append(f"- {hallucination}\n")
+        else:
+            md.append("None\n")
+
+        return "\n".join(md)
 
     def translate_query_output(graph_state: GraphState, step_count: int):
         step_count += 1
@@ -102,16 +135,15 @@ async def run_graph(query: str):
 
     def check_hallucinations_output(graph_state: GraphState, step_count: int):
         step_count += 1
-        has_hallucinations = graph_state["has_hallucinations"]
+        halluncation_grader_output = graph_state["hallucination_grader_output"]
 
-        if has_hallucinations:
-            st.error(
-                "Hallucinations detected in the generated text, retry generation",
-                icon="🚨",
+        st.info(f"{step_count}. Workflow complete!", icon="🎉")
+
+        if halluncation_grader_output:
+            halluncination_grader_report = format_to_markdown(
+                halluncation_grader_output
             )
-        else:
-            st.info("No hallucinations detected in the generated text")
-            st.info(f"{step_count}. Workflow complete!", icon="🎉")
+            st.info(halluncination_grader_report)
 
         return step_count
 

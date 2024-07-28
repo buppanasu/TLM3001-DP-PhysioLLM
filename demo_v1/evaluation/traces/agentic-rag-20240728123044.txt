@@ -1,0 +1,69 @@
+## Differential diagnoses based on assessments of the patient:
+
+### Summary
+The patient is a 45-year-old male presenting with lower back pain radiating down the left leg, worsened by prolonged sitting or standing and relieved by lying down. Based on the context and assessment, the most likely diagnosis is sciatica, followed by herniated disc and lumbar spinal stenosis. Piriformis syndrome is considered less likely. Further evaluation and imaging may be necessary for a definitive diagnosis.
+
+### Diagnosis 1: Sciatica
+**Rationale:** The patient's presentation of lower back pain with radiation down the left leg, exacerbated by prolonged sitting or standing and relieved by lying down, is consistent with sciatica. The positive straight leg raise test at 45 degrees on the left side further supports this diagnosis, indicating potential nerve root irritation or compression. The absence of motor weakness or sensory deficits aligns with mild nerve root irritation.
+
+##### In-text citations
+\[1\]: documents/Petty_Neuro MSK Management 2nd Ed.pdf
+
+    - For patients experiencing lower back pain with radiating pain down the left leg, it is important to consider several potential differential diagnoses, including: Sciatica: Often caused by compression of the sciatic nerve, leading to pain that radiates down the leg.
+
+
+\[2\]: documents/Norkin&White_Joint Motion.pdf
+
+    - A positive SLR test at 45 degrees, particularly on one side, may indicate irritation or compression of the lumbar nerve roots, often due to conditions such as a herniated disc or lumbar radiculopathy.
+
+
+
+### Diagnosis 2: Herniated Disc
+**Rationale:** The patient's symptoms of lower back pain with radiation down the left leg, combined with a positive straight leg raise test, suggest a herniated disc as a potential diagnosis. The pain's characteristics, including worsening with prolonged sitting or standing and relief by lying down, are typical of disc-related issues. The tenderness over the left paraspinal muscles and mild restriction in lumbar spine range of motion further support this diagnosis.
+
+##### In-text citations
+\[1\]: documents/Petty_Neuro MSK Management 2nd Ed.pdf
+
+    - Herniated Disc: A condition where the disc material presses on nearby nerves, causing pain in the lower back and leg.
+
+
+\[2\]: documents/Norkin&White_Joint Motion.pdf
+
+    - A positive SLR test at 45 degrees, particularly on one side, may indicate irritation or compression of the lumbar nerve roots, often due to conditions such as a herniated disc or lumbar radiculopathy.
+
+
+
+### Diagnosis 3: Lumbar Spinal Stenosis
+**Rationale:** Lumbar spinal stenosis is a potential diagnosis given the patient's age and the chronic nature of his symptoms. The pain's radiation down the left leg and the relief experienced when lying down are consistent with this condition. However, the absence of neurological deficits makes this diagnosis less likely compared to sciatica or a herniated disc.
+
+##### In-text citations
+\[1\]: documents/Petty_Neuro MSK Management 2nd Ed.pdf
+
+    - Spinal Stenosis: Narrowing of the spinal canal that can compress nerves and cause leg pain.
+
+
+\[3\]: https://www.hopkinsmedicine.org/health/conditions-and-diseases/back-pain/lower-back-pain-what-could-it-be
+
+    - Arthritis of the spine, lumbar spinal stenosis, and lumbar disk disease are common causes of lower back pain. Pain can radiate into the legs due to problems with facet joints, sacroiliac joints, muscles, or inflammation of the bursa.
+
+
+
+### Diagnosis 4: Piriformis Syndrome
+**Rationale:** Piriformis syndrome could explain the radiating pain down the left leg, particularly given the tenderness over the left paraspinal muscles. However, the positive straight leg raise test and the specific relief from lying down are more indicative of nerve root irritation or compression, making this diagnosis less likely.
+
+##### In-text citations
+\[1\]: documents/Petty_Neuro MSK Management 2nd Ed.pdf
+
+    - Piriformis Syndrome: A condition where the piriformis muscle irritates the sciatic nerve, leading to radiating pain.
+
+
+\[1\]: documents/Petty_Neuro MSK Management 2nd Ed.pdf
+
+    - Tenderness over the left paraspinal muscles in lower back pain patients suggests that these muscles are likely contributing to the pain, potentially involving both localized and referred pain mechanisms.
+
+
+
+### References
+- [1] Petty, N. J., & Barnard, S. Principles of Musculoskeletal Treatment and Management. Elsevier, 2017.
+- [2] Norkin, C. C., & White, D. J. Measurement of Joint Motion: A Guide to Goniometry. F.A. Davis, 2016.
+- [3] Hopkins Medicine, 'Lower Back Pain: What Could It Be?', 2023. [Online]. Available: https://www.hopkinsmedicine.org/health/conditions-and-diseases/back-pain/lower-back-pain-what-could-it-be. [Accessed: 10- Oct- 2023].
