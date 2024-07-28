@@ -2,7 +2,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import qdrant
 from langchain_community.document_loaders.directory import DirectoryLoader
 from langchain_community.document_loaders.pdf import PyPDFLoader
-from vector_embedding import get_vector_embeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
 
 def main():
@@ -22,7 +22,7 @@ def main():
         print("Splitted chunk", chunk.metadata)
 
     # Embed the chunks
-    embeddings = get_vector_embeddings("NeuML/pubmedbert-base-embeddings")
+    embeddings = HuggingFaceEmbeddings(model_name="NeuML/pubmedbert-base-embeddings")
     print("Embedding chunks...")
     qdrant.Qdrant.from_documents(
         chunks,
