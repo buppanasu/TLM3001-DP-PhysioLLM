@@ -11,6 +11,7 @@ env.bak/
 env1/
 env2/
 .env
+myVenv/
 
 # IDE
 .vscode/

@@ -11,7 +11,9 @@ from langchain.prompts import PromptTemplate, ChatPromptTemplate
 from langchain.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 from constants import Llm
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class VerifiedClaim(BaseModel):
     claim: str = Field(
