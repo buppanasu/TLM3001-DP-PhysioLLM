@@ -6,7 +6,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 
 def main():
-    vector_db_url = "http://localhost:6333"
+    # vector_db_url = "get from your .env"
 
     print("Ingesting documents...")
     loader = DirectoryLoader(
