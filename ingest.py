@@ -6,7 +6,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 
 def main():
-    # vector_db_url = "get from your .env"
+    vector_db_url = "http://localhost:6333"
 
     print("Ingesting documents...")
     loader = DirectoryLoader(
@@ -29,7 +29,7 @@ def main():
         embeddings,
         url=vector_db_url,
         collection_name="physio-textbooks",
-        prefer_grpc=True,
+        prefer_grpc=False,
     )
 
 
