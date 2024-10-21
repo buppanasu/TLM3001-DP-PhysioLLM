@@ -2,7 +2,7 @@ import asyncio
 import streamlit as st
 from agents.halluncination_grader import HallucinationGraderOutput
 from graph import GraphState, construct_graph
-from chatbot import chatbot_page  # <-- Import the chatbot module
+from chatbot_ui import chatbot_page  # <-- Import the chatbot module
 
 # Main title
 st.title("🩺💪🩻 PhysioTriage")

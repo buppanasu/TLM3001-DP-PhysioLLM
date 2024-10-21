@@ -11,7 +11,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from langchain_core.output_parsers.json import JsonOutputParser
 from langchain.prompts import PromptTemplate, ChatPromptTemplate
 from langchain.output_parsers import PydanticOutputParser
-from langchain_groq import ChatGroq
 from typing import List
 from pydantic import BaseModel, Field
 from constants import Llm

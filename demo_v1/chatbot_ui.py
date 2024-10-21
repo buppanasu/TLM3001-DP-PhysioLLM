@@ -1,4 +1,5 @@
 import streamlit as st
+from chatbot_rag import respond  # Assuming test3.py is in the same directory
 
 def chatbot_page():
     st.header("Chat with PhysioBot!")
@@ -26,16 +27,14 @@ def chatbot_page():
             background-color: #2B2B2B;  /* Dark grey for user messages */
             color: white;
             text-align: left;
-
         }
         .bot-message {
             background-color: #3A3B3C;  /* Slightly lighter grey for bot messages */
             color: white;
             text-align: left;
-
         }
         </style>
-        """, 
+        """,
         unsafe_allow_html=True
     )
 
@@ -46,8 +45,10 @@ def chatbot_page():
             # Append user input to chat history
             st.session_state.chat_history.append({'role': 'user', 'message': user_message})
 
+            # Use the respond function to get the bot's answer
+            bot_response = respond(user_message)
+
             # Append bot response to chat history
-            bot_response = f"Hi, human! You said: '{user_message}'."
             st.session_state.chat_history.append({'role': 'bot', 'message': bot_response})
 
             # Clear user input after sending
@@ -63,3 +64,6 @@ def chatbot_page():
     # Input box for user with 'on_change' callback to send message
     st.text_input("What do you need help with?", key="user_input", placeholder="Type your message here...", on_change=send_message)
 
+
+if __name__ == "__main__":
+    chatbot_page()

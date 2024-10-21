@@ -9,7 +9,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from altair import Literal
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers.json import JsonOutputParser
-from langchain_groq import ChatGroq
 from langchain.prompts import PromptTemplate, ChatPromptTemplate
 from langchain.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
