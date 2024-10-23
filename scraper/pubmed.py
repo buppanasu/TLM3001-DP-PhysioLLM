@@ -34,29 +34,39 @@ def ScrapperPrompt():
 
 def CleanName(fileName):
     """Clean the file name to remove invalid characters"""
-    return re.sub(r'[\\/*?:"<>|.]', "", fileName)
+    return re.sub(r'[\\/*?:"<>|._]', "", fileName)
 
 
-def AppendSourceMetadata(fileName, source):
-    """Append the source to PDF metadata"""
+# def AppendSourceMetadata(fileName, source):
+#     """Append the source to PDF metadata"""
+#     try:
+#         reader = PdfReader("Resources/" + fileName)
+#         writer = PdfWriter()
+#
+#         for page in reader.pages:
+#             writer.add_page(page)
+#
+#         metadata = reader.metadata
+#         writer.add_metadata(metadata)
+#         writer.add_metadata({"/Source": source})
+#
+#         with open("Resources/" + fileName, "wb") as f:
+#             writer.write(f)
+#             f.close()
+#
+#         print("Successfully appended metadata to: " + fileName)
+#     except:
+#         print("Error in appending metadata!")
+
+
+def AppendSourceToFilename(fileName, source):
+    """Append the source to file name and return the new file name"""
     try:
-        reader = PdfReader("Resources/" + fileName)
-        writer = PdfWriter()
-
-        for page in reader.pages:
-            writer.add_page(page)
-
-        metadata = reader.metadata
-        writer.add_metadata(metadata)
-        writer.add_metadata({"/Source": source})
-
-        with open("Resources/" + fileName, "wb") as f:
-            writer.write(f)
-            f.close()
-
-        print("Successfully appended metadata to: " + fileName)
+        splitFilenameList = fileName.split(".")
+        newFileName = splitFilenameList[0] + "_" + source + "." + splitFilenameList[1]
+        return newFileName
     except:
-        print("Error in appending metadata!")
+        return fileName
 
 
 def ScrapePDF():
@@ -124,6 +134,7 @@ def DownloadPDF(url):
 
                     if title:
                         urlName = CleanName(title) + ".pdf"
+                        urlName = AppendSourceToFilename(urlName, "PubMed Books")
             
             try:
                 # Save PDF
@@ -132,8 +143,6 @@ def DownloadPDF(url):
 
                 f.close()
                 print("Successfully Created: " + urlName)
-
-                AppendSourceMetadata(urlName, "PubMed Books")
 
                 return 1
             except:
@@ -154,13 +163,12 @@ def DownloadPDF(url):
                 # Create a filename for the PDF
                 code = url.split("/")[-1]
                 urlName = CleanName(code) + ".pdf"
+                urlName = AppendSourceToFilename(urlName, "PubMed Books")
 
                 # Use pdfkit.from_url to save the Print View page as a PDF with external resources
                 pdfkit.from_url(printViewURL, "Resources/" + urlName)
 
                 print("Successfully Created: " + urlName)
-
-                AppendSourceMetadata(urlName, "PubMed Books")
 
                 return 1
             except Exception as e:

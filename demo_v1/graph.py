@@ -74,7 +74,7 @@ async def retrieve(graph_state: GraphState) -> GraphState:
 
         for doc, score in results:
             query_result["documents"].append(
-                f"source:{doc.metadata['source']}\ncontent:{doc.page_content}"
+                f"source:{doc.metadata['source']}WebSource:{doc.metadata['WebSource']}\n\ncontent:{doc.page_content}"
             )
 
         documents.append(query_result)

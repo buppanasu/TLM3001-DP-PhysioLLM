@@ -3,6 +3,7 @@ from langchain_community.vectorstores import qdrant
 from langchain_community.document_loaders.directory import DirectoryLoader
 from langchain_community.document_loaders.pdf import PyPDFLoader
 from langchain_huggingface import HuggingFaceEmbeddings
+import re
 
 
 def main():
@@ -18,8 +19,16 @@ def main():
     # Split the documents into chunks
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
     chunks = text_splitter.split_documents(documents)
+
     for chunk in chunks:
-        print("Splitted chunk", chunk.metadata)
+        # Add web source into metadata
+        source = chunk.metadata["source"]
+        webSource = re.findall(r".+_(.*?)\..+", source)
+
+        if webSource:
+            chunk.metadata["WebSource"] = webSource[0]
+        else:
+            chunk.metadata["WebSource"] = "-"
 
     # Embed the chunks
     embeddings = HuggingFaceEmbeddings(model_name="NeuML/pubmedbert-base-embeddings")

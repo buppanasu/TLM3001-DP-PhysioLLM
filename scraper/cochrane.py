@@ -34,7 +34,6 @@ def init_driver(download_folder):
     return driver
 
 
-
 def scrape_issues_and_search(search_term, max_pdfs):
     """Scrape issues from each year and search for reviews matching the search term."""
     reviews = []
@@ -222,6 +221,7 @@ def main():
         download_pdf(driver, review['url'])
 
     driver.quit()
+
 
 if __name__ == "__main__":
     main()

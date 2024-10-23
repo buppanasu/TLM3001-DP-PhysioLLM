@@ -17,7 +17,7 @@ def retrieve_documents(query: str):
 
     documents: List[str] = []
     for doc in results:
-        documents.append(f"source:{doc.metadata['source']}\ncontent:{doc.page_content}")
+        documents.append(f"source:{doc.metadata['source']}WebSource:{doc.metadata['WebSource']}\n\ncontent:{doc.page_content}")
 
     return "\n\n---\n\n".join(documents)
 

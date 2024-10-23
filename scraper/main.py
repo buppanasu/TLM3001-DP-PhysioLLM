@@ -1,4 +1,4 @@
-import scraper.pubmed as pubmed
+import pubmed
 
 
 def main():
