@@ -2,13 +2,14 @@ import asyncio
 import streamlit as st
 from agents.halluncination_grader import HallucinationGraderOutput
 from graph import GraphState, construct_graph
-from chatbot import chatbot_page  # <-- Import the chatbot module
+from chatbot_ui import chatbot_page  # <-- Import the chatbot module
+from ingest_ui import document_ingestion_page
 
 # Main title
 st.title("🩺💪🩻 PhysioTriage")
 
 # Sidebar with tab options
-tab = st.sidebar.radio("Navigate", ["PhysioTriage", "Chatbot"])
+tab = st.sidebar.radio("Navigate", ["PhysioTriage", "Chatbot", "Ingest"])
 
 with st.sidebar:
     """Hello! 👋"""
@@ -206,3 +207,6 @@ if tab == "PhysioTriage":
 elif tab == "Chatbot":
     # Call the chatbot page from chatbot.py
     chatbot_page()
+
+elif tab == "Ingest":
+    document_ingestion_page()
