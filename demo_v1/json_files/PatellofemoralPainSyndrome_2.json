@@ -1,0 +1,127 @@
+{
+    "Rehabilitation Protocol for Patellofemoral Pain Syndrome": {
+        "Introduction": {
+            "content": "This guideline is intended to provide the clinician with a guideline of the non-operative course of care for Patellofemoral Pain Syndrome. Specific intervention should be based on the needs of the individual and should consider exam findings and clinical decision making. The timeframes for expected outcomes contained within this guideline may vary. If a clinician requires assistance in the progression of a patient, they should consult with the referring provider. The interventions included within this protocol are not intended to be an inclusive list. Therapeutic interventions should be included and modified based on the progress of the patient and under the discretion of the clinician.",
+            "terms": "Patellofemoral Pain Syndrome (PFPS) is a general category of anterior knee pain that is characterized as pain behind or around the patella, as a result of patella malalignment, altered patellofemoral (PF) joint forces and/or repetitive stress to the area. Also known as Runner's Knee, chondromalacia patella, retropatellar pain syndrome, anterior knee pain syndrome, patellar malalignment, and patellofemoral arthralgia. Patellofemoral syndrome can have a collection of signs and symptoms which may encompass body regions throughout the kinetic chain, from the lumbar spine to the feet."
+        },
+        "Diagnosis Considerations": {
+            "content": {
+                "pain": "Pain: typically reported anywhere circumferential to the anterior knee or retropatellar region.",
+                "common_aggravating_factors": "Common Aggravating Factors: prolonged sitting, squatting, climbing/descending stairs, running, and jumping.",
+                "increased_varum_valgum": "Increased tibiofemoral varum/valgum or tibial varum: normal subjects with hypermobility exhibit larger Q angles than normal subjects with normal mobility. Patients with greater amounts of medial rotation of the femur with respect to the tibia, typically produce larger amounts of contact area at the patellofemoral joint.",
+                "foot_position": "Foot position/footwear. Excessive or late pronation during gait can increase tibial internal rotation, thus altering patellofemoral forces.",
+                "higher_level_activities": "Higher-level activities which include landing with excessive hip internal rotation and/or knee valgus may contribute to abnormal PF joint loading."
+            }
+        },
+        "Differential Diagnosis": {
+            "content": [
+                "Strength deficits (including balance and eccentric control) may be noticeable throughout the lower extremity and lumbopelvic region.",
+                "Special tests: Vastus Medialis Coordination Test, Patellar Apprehension Test, Clarke's Test, Eccentric Step Test, McConnell's Test, Patellar Tilt Test, Tibial Angulation Test",
+                "Articular cartilage injury",
+                "Bone tumor",
+                "Chondromalacia patella",
+                "Referred pain from low back or hip",
+                "Hoffa's Disease",
+                "Iliotibial Band Friction Syndrome",
+                "Osgood-Schlatter disease",
+                "Osteochondritis dessicans",
+                "Patellar stress fracture",
+                "Patellofemoral arthritis",
+                "Pes Anserine Bursitis",
+                "Prepatellar Bursitis"
+            ]
+        },
+        "PHASE I: IMMEDIATE/ACUTE (0-2 WEEKS)": {
+            "Rehabilitation Goals": {
+                "content": [
+                    "Reduce any swelling, minimize pain",
+                    "Restore patellar, lower extremity mobility (including hip and ankle)",
+                    "Restore tolerance to full motion",
+                    "Minimize arthrogenic muscle inhibition and re-establish quadriceps, hip control"
+                ]
+            },
+            "Interventions": {
+                "content": [
+                    "Minimize aggravating factors as much as possible, such as descending stairs, prolonged sitting, running, jumping.",
+                    "Initial self-symptom management and joint protection.",
+                    "Independent with initial home exercise program.",
+                    "During this early phase, numerous manual interventions may be utilized to reduce the patient's pain, restriction to movement, and joint loading: Soft Tissue Mobilization/Instrument-Assisted Soft Tissue Mobilization, Patellar Taping (McConnell, Kinesiotaping), Ischemic compression/Bloodflow Restrictive Training, Dry Needling, Nerve mobilization, Joint mobilization/manipulation, Strengthening, Stretching Mobility, Stationary biking for tolerable mobility (minimal resistance), Stretching/Foam rolling including Hip flexors, Hamstrings, Quadriceps, Iliotibial band, Adductors, Hip extensors/rotators, Gastroc-soleus complex.",
+                    "Strengthening exercises may include Quadriceps isometrics at 0, 45, 90 degrees of flexion, Straight leg raise, Bridge/unilateral bridging, Sidelying clamshells, Sidelying hip abduction, Core/lumbopelvic stabilization (transverse abdominus, multifidus lifts, front/side planks)"
+                ]
+            },
+            "Criteria for Progress": {
+                "content": [
+                    "Full knee motion, compared to uninvolved side.",
+                    "Appropriate quad contraction with superior patella glide and full active extension.",
+                    "Able to perform straight leg raise without lag or pain.",
+                    "Full tolerance to weightbearing with relative knee extension."
+                ]
+            }
+        },
+        "PHASE II: INTERMEDIATE/SUB-ACUTE (2-4 WEEKS)": {
+            "Rehabilitation Goals": {
+                "content": [
+                    "Progress to closed-chain/weightbearing activities without loading of knee flexion.",
+                    "Maintain full ROM.",
+                    "Tolerance to closed chain strengthening without loading of knee joint in flexion.",
+                    "Independent with progressed home exercise program, all daily activities."
+                ]
+            },
+            "Additional Interventions": {
+                "content": [
+                    "Strengthening: Sumo walks, Monster walks, 4-way hip drills.",
+                    "Balance/proprioception: Single-leg stance, Clock taps, Ball toss.",
+                    "Correction of movement abnormalities with functional tasks."
+                ]
+            },
+            "Criteria to Progress": {
+                "content": [
+                    "Tolerance to weightbearing activities.",
+                    "Maintenance of full ROM.",
+                    "Normalize muscle length or achieve muscle length goals."
+                ]
+            }
+        },
+        "PHASE III: LATE/CHRONIC (4-6 WEEKS)": {
+            "Rehabilitation Goals": {
+                "content": [
+                    "Maintain full ROM.",
+                    "Promote proper movement patterns.",
+                    "Avoid post exercise pain/swelling.",
+                    "Achieve all muscle strength goals.",
+                    "Negotiating stairs unlimited.",
+                    "Full tolerance to closed chain knee joint loading with flexion, with appropriate eccentric control.",
+                    "Achieve daily/functional goals."
+                ]
+            },
+            "Additional Interventions": {
+                "content": [
+                    "Strengthening: Partial squat, squat to chair, wall slide, progressing to functional squat pattern.",
+                    "Lunge/reverse lunge.",
+                    "Step ups.",
+                    "Step downs, eccentric loading.",
+                    "Correction of movement abnormalities with sport-related tasks.",
+                    "Return to Running Program."
+                ]
+            },
+            "Criteria for Discharge": {
+                "content": [
+                    "Independent self-management of symptoms.",
+                    "Demonstrate appropriate understanding of condition and maintenance to prevent risk of recurrence."
+                ]
+            }
+        },
+        "Revised": "6/2021",
+        "References": [
+            "Chang WD, Chen FC, Lee CL, Lin HY, Lai PT. Effects of Kinesio Taping versus McConnell Taping for Patellofemoral Pain Syndrome: A Systematic Review and Meta-Analysis. Evidence-Based Complementary and Alternative Medicine. 2015; 1-11.",
+            "Sueki D, Brechter J. Orthopedic Rehabilitation Clinical Advisor. 1st ed. Maryland Heights, Missouri: Mosby; 2009. 598-599.",
+            "Arazpour M, Bahramian F, Abutorabi A, Nourbakhsh ST, Alidousti A, Hamidreza Aslani. The Effect of Patellofemoral Pain Syndrome on Gait Parameters: A Literature Review. The Archives of Bone and Joint Surgery. October 2016; 4(4): 298-306.",
+            "Esp\u00ed-L\u00f3pez GV, Arnal-G\u00f3mez A, Balasch-Bernat M, Ingl\u00e9s M. Effectiveness of Manual Therapy Combined with Physical Therapy in Treatment of Patellofemoral Pain Syndrome: Systematic Review. Journal of Chiropractic Medicine. June 2018; 139-146.",
+            "Boling MC, Padua DA, Marshall SW, Guskiewicz K, Pyne S, Beutler A. A prospective investigation of biomechanical risk factors for patellofemoral pain syndrome: the Joint Undertaking to Monitor and Prevent ACL Injury (JUMP-ACL) cohort. American Journal of Sports Medicine. 2009; 37 (11): 2108-2116.",
+            "Crossley K, Bennell K, Green S, Cowan S, McConnell J. Physical therapy for patellofemoral pain: A randomized, double-blinded, placebo-controlled trial. The American Journal of Sports Medicine. 2002; 30(6): 857-865.",
+            "Kettunen JA, Harilainen A, Sandelin J, et al. Knee arthroscopy and exercise versus exercise only for chronic patellofemoral pain syndrome: A randomized controlled trial. BMC Medicine. 2007; 5 (1): 38.",
+            "Ferber R, Bolgla L, Earl-Boehm JE, Emery C, Hamstra-Wright K. Strengthening of the Hip and Core Versus Knee Muscles for the Treatment of Patellofemoral Pain: A Multicenter Randomized Controlled Trial. Journal of Athletic Training. 2015; 50 (4): 366-377."
+        ],
+        "Contact": "Please email MGHSportsPhysicalTherapy@partners.org with questions specific to this protocol."
+    }
+}
